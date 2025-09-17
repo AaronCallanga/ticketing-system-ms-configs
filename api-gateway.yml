@@ -1,0 +1,71 @@
+server:
+  port: 8090
+
+# Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+# Keycloak
+keycloak:
+  auth:
+    jwk-set-uri:  http://localhost:8091/realms/ticketing-security-realm/protocol/openid-connect/certs
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8091/realms/ticketing-security-realm
+
+# Actuator
+management:
+  health:
+    circuitbreakers:
+      enabled:  true
+  endpoints:
+    jmx:
+      exposure:
+        include:  *   # Expose all endpoints
+  endpoint:
+    health:
+      show-details: always
+
+# Resilience4j
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator:  true
+        sliding-window-type:  COUNT_BASED
+        sliding-window-size:  8
+        failure-rate-threshold: 50    # If 50% (.50) of the request in sliding window size (8) fails then move to CLOSE position to OPEN position
+        minimum-number-of-calls:  4
+        waitDurationInOpenState:  5s
+        permittedNumberOfCallsInHalfOpenState:  2
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration:  2s
+
+# Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls[0]:
+      name:  Inventory Service
+      url:  /docs/inventoryservice/v3/api-docs
+    urls[1]:
+      name: Booking Service
+      url:  /docs/bookingservice/v3/api-docs
+  api-docs:
+    path: /v3/api-docs
+security:
+  excluded:
+    urls: /swagger-ui.html, /swagger-ui/**, /docs/**, /v3/api-docs/**, /swagger-resources/**, /api-docs/**

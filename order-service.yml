@@ -1,2 +1,37 @@
-server.port=8082
-inventory.service.url=http://localhost:8080/api/v1/inventories
+server:
+  port: 8082
+
+inventory:
+  service:
+    url: http://localhost:8080/api/v1/inventories
+
+# Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+# MySQL
+spring:
+  datasource:
+    url:  jdbc:mysql://localhost:3306/ticketing
+    username: root
+    password: password
+    driver-class-name:  com.mysql.jdbc.Driver
+  jpa:
+    database-platform:  org.hibernate.dialect.MySQL8Dialect
+
+# Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic:  booking
+    # Serializer for producers to send message to the kafka-broker  (Deserializer for consumers)
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping:  bookingEvent:com.callanga.booking_service.event.BookingEvent

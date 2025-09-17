@@ -26,7 +26,7 @@ management:
   endpoints:
     jmx:
       exposure:
-        include:  *   # Expose all endpoints
+        include:  "*"  # Expose all endpoints
   endpoint:
     health:
       show-details: always

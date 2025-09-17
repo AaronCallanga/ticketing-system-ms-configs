@@ -1,7 +1,7 @@
 server:
   port: 8080
 
-mema: haha
+mema: testtest
 
 # Eureka
 eureka:

@@ -35,3 +35,10 @@ spring:
           json:
             type:
               mapping:  bookingEvent:com.callanga.booking_service.event.BookingEvent
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh

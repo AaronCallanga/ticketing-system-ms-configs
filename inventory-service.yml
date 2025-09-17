@@ -1,8 +1,6 @@
 server:
   port: 8080
 
-mema: testtest
-
 # Eureka
 eureka:
   client:

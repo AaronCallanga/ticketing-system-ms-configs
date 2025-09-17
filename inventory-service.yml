@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+# Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+# MySQL
+spring:
+  datasource:
+    url:  jdbc:mysql://localhost:3306/ticketing
+    username: root
+    password: password
+    driver-class-name:  com.mysql.jdbc.Driver
+  jpa:
+    database-platform:  org.hibernate.dialect.MySQL8Dialect
+    # We do the database update through flyway. This disables the auto update ddl that hibernate uses
+    hibernate:
+      ddl-auto: none
+
+# Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs

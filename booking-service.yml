@@ -27,7 +27,7 @@ spring:
     template:
       default-topic: booking
     # Serializer for producers to send message to the kafka-broker  (Deserializer for consumers)
-    consumer:
+    producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
